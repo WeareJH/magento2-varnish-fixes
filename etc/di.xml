@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Plugin section -->
     <type name="Magento\Framework\HTTP\PhpEnvironment\Response">
-        <plugin name="trive_varnish_http_response_split_header" type="Trive\Varnish\Plugin\HttpResponseSplitHeader" />
+        <plugin name="Trive_Varnish::splitXMagentoTagsHeader"
+                type="Trive\Varnish\Plugin\SplitXMagentoTagsHeader" sortOrder="10"/>
     </type>
+    <!-- End of plugin section -->
 </config>
