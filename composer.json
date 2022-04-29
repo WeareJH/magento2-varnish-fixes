@@ -1,11 +1,10 @@
 {
     "name": "trive/varnish",
     "type": "magento2-module",
-    "description": "Magento 2 Varnish Fixes Module",
-    "version": "1.0.0",
+    "description": "Magento 2 module fixing x-magento-tags issues with Varnish",
     "license": "proprietary",
     "require": {
-        "php": "^7.3 || ^7.4",
+        "php": "^7.3 || ^7.4 || ^8.1",
         "magento/framework": "*",
         "magento/module-page-cache": "*"
     },
