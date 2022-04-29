@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trive\Varnish\Model\Http;
 
-use Zend\Http\Header\MultipleHeaderInterface;
-use Zend\Http\Header\GenericHeader;
-use Zend\Http\Header\HeaderValue;
-use Zend\Http\Header\Exception\InvalidArgumentException;
+use Laminas\Http\Header\MultipleHeaderInterface;
+use Laminas\Http\Header\GenericHeader;
+use Laminas\Http\Header\HeaderValue;
+use Laminas\Http\Header\Exception\InvalidArgumentException;
 
 class XMagentoTags implements MultipleHeaderInterface
 {
     /**
      * @var string
      */
-    protected $value;
+    private $value;
 
     /**
      * XMagentoTags constructor.
      *
      * @param string|null $value
      */
-    public function __construct($value = null)
+    public function __construct(?string $value = null)
     {
         if ($value) {
             HeaderValue::assertValid($value);
@@ -30,14 +32,13 @@ class XMagentoTags implements MultipleHeaderInterface
     /**
      * Create X-Magento-Tags header from a given header line
      *
-     * @param string $headerLine The header line to parse.
-     *
+     * @param string $headerLine
      * @return self
-     * @throws InvalidArgumentException If the name field in the given header line does not match.
+     * @throws InvalidArgumentException
      */
-    public static function fromString($headerLine)
+    public static function fromString($headerLine): self
     {
-        list($name, $value) = GenericHeader::splitHeaderLine($headerLine);
+        [$name, $value] = GenericHeader::splitHeaderLine($headerLine);
 
         // check to ensure proper header type for this factory
         if (strtolower($name) !== 'x-magento-tags') {
@@ -49,23 +50,18 @@ class XMagentoTags implements MultipleHeaderInterface
             );
         }
 
-        // @todo implementation details
-        $header = new static($value);
-
-        return $header;
+        return new static($value);
     }
 
     /**
-     * Cast multiple header objects to a single string header
-     *
      * @param  array $headers
      * @throws InvalidArgumentException
      * @return string
      */
-    public function toStringMultipleHeaders(array $headers)
+    public function toStringMultipleHeaders(array $headers): string
     {
         $name = $this->getFieldName();
-        $values = array($this->getFieldValue());
+        $values = [$this->getFieldValue()];
         foreach ($headers as $header) {
             if (!$header instanceof static) {
                 throw new InvalidArgumentException(
@@ -79,11 +75,9 @@ class XMagentoTags implements MultipleHeaderInterface
     }
 
     /**
-     * Get the header name
-     *
      * @return string
      */
-    public function getFieldName()
+    public function getFieldName(): string
     {
         return 'X-Magento-Tags';
     }
@@ -93,17 +87,15 @@ class XMagentoTags implements MultipleHeaderInterface
      *
      * @return string
      */
-    public function getFieldValue()
+    public function getFieldValue(): string
     {
         return $this->value;
     }
 
     /**
-     * Return the header as a string
-     *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return 'X-Magento-Tags: ' . $this->getFieldValue();
     }
