@@ -6,7 +6,8 @@
     "require": {
         "php": "^7.3 || ^7.4 || ^8.1",
         "magento/framework": "*",
-        "magento/module-page-cache": "*"
+        "magento/module-page-cache": "*",
+        "laminas/laminas-http": "*"
     },
     "autoload": {
         "files": [
